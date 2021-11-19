@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import Page from './Page';
+import { Platform } from 'expo-modules-core';
+import { StyleSheet, View, StatusBar, Text, BackHandler, Dimensions } from 'react-native';
+import 'react-native-gesture-handler';
+import * as Location from "expo-location";
 
 export default function App() {
+  
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        
+        <Page/>
+        {/* <MapView style={styles.map} /> */}
+      </View>
+    </Provider>
+    
   );
+  
 }
 
+
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  container:{
+    flex:1,
+    marginTop:Platform.OS==='android'? StatusBar.currentHeight:0,
+    flexDirection:'column',
+    alignItems:'center'
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });
+
+
