@@ -3,9 +3,8 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import Page from './Page';
 import { Platform } from 'expo-modules-core';
-import { StyleSheet, View, StatusBar, Text, BackHandler, Dimensions } from 'react-native';
+import { StyleSheet, View, StatusBar, Dimensions } from 'react-native';
 import 'react-native-gesture-handler';
-import * as Location from "expo-location";
 
 export default function App() {
   
@@ -14,7 +13,6 @@ export default function App() {
       <View style={styles.container}>
         
         <Page/>
-        {/* <MapView style={styles.map} /> */}
       </View>
     </Provider>
     

@@ -1,14 +1,31 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Feather } from '@expo/vector-icons'; 
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons'; 
 import { Foundation } from '@expo/vector-icons';
+import { loginAction } from '../../store/login-action';
 import { useDispatch } from 'react-redux';
-import { authSliceAction } from '../../store/authSlice';
 
 export default function Register({navigation}) {
     const dispatch = useDispatch()
+    const [name,setName] = useState('')
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+    const [confirmedPassword,setConfirmedPassword] = useState('')
+
+    const registerHandler = async()=> {
+        if(!email.includes("@")){
+            alert("Invalid email")
+            return 
+        }
+        else if(password!==confirmedPassword){
+            alert("Password is not the same!!!")
+            return 
+        }
+        
+        dispatch(loginAction(email,name,password))
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Register</Text>
@@ -18,25 +35,33 @@ export default function Register({navigation}) {
                     <View style={styles.inputIcon}>
                         <Feather name="user" size={24} color="white" />
                     </View>
-                    <TextInput placeholder='username' style={styles.inputText}></TextInput>
+                    <TextInput placeholder='username' style={styles.inputText} onChangeText={(input)=>{
+                        setName(input)
+                    }}></TextInput>
                 </View>
                 <View style={styles.input}>
                     <View style={styles.inputIcon}>
                         <AntDesign name="mail" size={24} color="white" />
                     </View>
-                    <TextInput placeholder='email' style={styles.inputText}></TextInput>
+                    <TextInput placeholder='email' style={styles.inputText} onChangeText={(input)=>{
+                        setEmail(input)
+                    }}></TextInput>
                 </View>
                 <View style={styles.input}>
                     <View style={styles.inputIcon}>
                         <Foundation name="key" size={24} color="white" />
                     </View>
-                    <TextInput placeholder='password' style={styles.inputText} secureTextEntry={true}></TextInput>
+                    <TextInput placeholder='password' style={styles.inputText} secureTextEntry={true} onChangeText={(input)=>{
+                        setPassword(input)
+                    }}></TextInput>
                 </View>
                 <View style={styles.input}>
                     <View style={styles.inputIcon}>
                         <Foundation name="key" size={24} color="white" />
                     </View>
-                    <TextInput placeholder='Confirmed password' style={styles.inputText} secureTextEntry={true}></TextInput>
+                    <TextInput placeholder='Confirmed password' style={styles.inputText} secureTextEntry={true} onChangeText={(input)=>{
+                        setConfirmedPassword(input)
+                    }}></TextInput>
                 </View>
                 <View style={{flexDirection:'column',alignItems:'center'}}>
                     <Text style={{marginTop:10, fontSize:17,color:'blue',textDecorationLine: 'underline',}} onPress={()=>{
@@ -44,9 +69,7 @@ export default function Register({navigation}) {
                     }}>Login now!</Text>
                 </View>
                 <View style={styles.position}>
-                    <TouchableOpacity style={styles.button} onPress={()=>{
-                        dispatch(authSliceAction.login())
-                    }}>
+                    <TouchableOpacity style={styles.button} onPress={registerHandler}>
                         <Text style={{color:'white',fontSize:18}}>Register</Text>
                     </TouchableOpacity>
                 </View>

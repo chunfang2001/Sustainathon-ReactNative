@@ -1,12 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Feather } from '@expo/vector-icons'; 
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { AntDesign } from '@expo/vector-icons'; 
+import { loginAction } from '../../store/login-action';
 import { useDispatch } from 'react-redux';
-import { authSliceAction } from '../../store/authSlice';
 
 export default function Login({navigation}) {
     const dispatch = useDispatch()
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+
+    const loginHandler = async()=>{
+        if(email===""){
+            alert("Please fill in the blank")
+            return
+        }else if (password===""){
+            alert("Please fill in the blank")
+            return
+        }
+        dispatch(loginAction(email,"",password))
+    }
+    
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>LOGIN</Text>
@@ -14,15 +30,19 @@ export default function Login({navigation}) {
             <View style={styles.box}>
                 <View style={styles.input}>
                     <View style={styles.inputIcon}>
-                        <Feather name="user" size={24} color="white" />
+                        <AntDesign name="mail" size={24} color="white" />
                     </View>
-                    <TextInput placeholder='username' style={styles.inputText}></TextInput>
+                    <TextInput placeholder='email' style={styles.inputText} value={email} onChangeText={(input)=>{
+                        setEmail(input)
+                    }}></TextInput>
                 </View>
                 <View style={styles.input}>
                     <View style={styles.inputIcon}>
                         <Feather name="key" size={24} color="white" />
                     </View>
-                    <TextInput placeholder='password' style={styles.inputText} secureTextEntry={true}></TextInput>
+                    <TextInput placeholder='password' style={styles.inputText} secureTextEntry={true} onChangeText={(input)=>{
+                        setPassword(input)
+                    }}></TextInput>
                 </View>
                 <View style={{flexDirection:'column',alignItems:'center'}}>
                     <Text style={{marginTop:10, fontSize:17,color:'blue',textDecorationLine: 'underline',}} onPress={()=>{
@@ -31,7 +51,7 @@ export default function Login({navigation}) {
                 </View>
                 <View style={styles.position}>
                     <TouchableOpacity style={styles.button} onPress={()=>{
-                        dispatch(authSliceAction.login())
+                        loginHandler()
                     }}>
                         <Text style={{color:'white',fontSize:18}}>Log in</Text>
                     </TouchableOpacity>

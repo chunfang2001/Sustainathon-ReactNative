@@ -1,5 +1,5 @@
 import React,{ useEffect } from 'react'
-import { View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text, BackHandler} from 'react-native';
 import LoginPage from './screen/LoginPage';
 import { useSelector } from 'react-redux';
 import AllPage from './screen/AllPage';
@@ -15,7 +15,7 @@ export default function Page() {
     const requestPermission = async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-          BackHandler.exitApp();
+          BackHandler.exitApp()
           return;
         }
         const location = await Location.getCurrentPositionAsync()
@@ -28,7 +28,9 @@ export default function Page() {
       useEffect(()=>{
         requestPermission()
       },[])
-    const isSignIn = useSelector(state=>state.auth.auth)
+
+    const id = useSelector(state=>state.auth.id)
+    const gotID = id===""?false:true
     const af = async()=>{
         await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
           accuracy: Location.Accuracy.Highest,
@@ -55,8 +57,8 @@ export default function Page() {
         <View style={styles.container}>
             <Text onPress={af}>a</Text>
             <Text onPress={stopaf}>b</Text>
-            {!isSignIn&&<LoginPage/>}
-            {isSignIn&&<AllPage></AllPage>}
+            {!gotID&&<LoginPage/>}
+            {gotID&&<AllPage></AllPage>}
         </View>
     )
 }

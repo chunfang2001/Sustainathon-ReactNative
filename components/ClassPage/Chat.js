@@ -1,10 +1,32 @@
-import React, { useRef } from 'react'
+import React, { useRef,useState } from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons'; 
 import { Divider } from 'react-native-elements/dist/divider/Divider';
+import useSWR from 'swr';
+import { useSelector } from 'react-redux';
+
 
 export default function Chat() {
+    const sessionID = useSelector(state => state.session.id)
+    const [text,setText] = useState("")
+    let {data} = useSWR(`https://sustainathon.vercel.app/api/db/message/get/?session_id=${sessionID}`, (...args) => fetch(...args).then(res => res.json()))
+
+    const createMessageHandler = async()=>{
+        const fetcher = await fetch("https://sustainathon.vercel.app/api/db/message/create", {
+                method: "POST",
+                body: JSON.stringify({ 
+                sender: "Anonymous", // put anonymous or student email
+                text: text, // the message
+                session_id: sessionID // need a created session_id
+            }),
+                headers: {
+                "Content-Type": "application/json",
+                },
+        });
+        const result = await fetcher.json();
+        setText("")
+    }
     const scrollViewRef = useRef();
     return (
         <View style={styles.container}>
@@ -15,61 +37,26 @@ export default function Chat() {
             <ScrollView style={styles.quizContainer} 
                 ref={scrollViewRef}
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello World</Text>
-                    </View>  
-                </View>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello Worldsssssssssssssssssssssssssssssssssssssssssss</Text>
-                    </View>  
-                </View>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello Worldsssssssssssssssssssssssssssssssssssssssssss</Text>
-                    </View>  
-                </View>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello Worldsssssssssssssssssssssssssssssssssssssssssss</Text>
-                    </View>  
-                </View>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello Worldsssssssssssssssssssssssssssssssssssssssssss</Text>
-                    </View>  
-                </View>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello Worldsssssssssssssssssssssssssssssssssssssssssss</Text>
-                    </View>  
-                </View>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello Worldsssssssssssssssssssssssssssssssssssssssssss</Text>
-                    </View>  
-                </View>
-                <View style={styles.chatBox}>
-                    <View style={styles.messageBox}>
-                        <Text style= {styles.char}>Anonymous</Text>
-                        <Text style={styles.message}>Hello Worldsssssssssssssssssssssssssssssssssssssssssss</Text>
-                    </View>  
-                </View>
+                {data?.chat.map((msg)=>{
+                    return (
+                    <View style={styles.chatBox} key={msg.id}>
+                        <View style={styles.messageBox}>
+                            <Text style= {styles.char}>{msg.sender}</Text>
+                            <Text style={styles.message}>{msg.text}</Text>
+                        </View>  
+                    </View>)
+                })}
             </ScrollView>
             <Divider width={5}></Divider>
             <View style={styles.chatInput}>
                 <View style={styles.chatContainer}>
-                    <TextInput placeholder="Type Something" style={styles.input}></TextInput>
+                    <TextInput placeholder="Type Something" value={text} style={styles.input} onChangeText={(input)=>{
+                        setText(input)
+                    }}></TextInput>
                 </View>
-                <Ionicons name="send" size={24} color="purple" style={styles.sendButton}/>
+                <TouchableOpacity onPress={createMessageHandler}>
+                    <Ionicons name="send" size={24} color="purple" style={styles.sendButton}/>
+                </TouchableOpacity>    
             </View>
         </View>
     )
