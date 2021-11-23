@@ -42,7 +42,7 @@ export default function Login({navigation}) {
                     </View>
                     <TextInput placeholder='password' style={styles.inputText} secureTextEntry={true} onChangeText={(input)=>{
                         setPassword(input)
-                    }}></TextInput>
+                    }} ></TextInput>
                 </View>
                 <View style={{flexDirection:'column',alignItems:'center'}}>
                     <Text style={{marginTop:10, fontSize:17,color:'blue',textDecorationLine: 'underline',}} onPress={()=>{
@@ -64,7 +64,8 @@ export default function Login({navigation}) {
 const styles = StyleSheet.create({
     container:{
         flex :1 ,
-        backgroundColor:'#dacfe5',
+        // backgroundColor:'#dacfe5',
+        backgroundColor:'rgb(243, 244, 246)',
         flexDirection:'column',
         alignItems:'center',
     },
@@ -84,18 +85,21 @@ const styles = StyleSheet.create({
         marginBottom:30,
     },
     inputIcon:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         padding:10,
         borderTopLeftRadius:5,
         borderBottomLeftRadius:5,
+        elevation:10
     },
     inputText:{
         backgroundColor:'white',
         flex:1,
-        padding:9,
+        padding:8,
         borderTopRightRadius:5,
         borderBottomRightRadius:5,
-        fontSize:18
+        fontSize:18,
+        elevation:4
     },
     position:{
         alignItems:'center',
@@ -103,7 +107,8 @@ const styles = StyleSheet.create({
         marginTop:30
     },
     button:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         padding:8,
         borderRadius:10,
         paddingLeft:15,

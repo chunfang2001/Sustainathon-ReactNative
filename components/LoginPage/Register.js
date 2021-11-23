@@ -81,7 +81,8 @@ export default function Register({navigation}) {
 const styles = StyleSheet.create({
     container:{
         flex :1 ,
-        backgroundColor:'#dacfe5',
+        // backgroundColor:'#dacfe5',
+        backgroundColor:'rgb(243, 244, 246)',
         flexDirection:'column',
         alignItems:'center',
     },
@@ -101,7 +102,8 @@ const styles = StyleSheet.create({
         marginBottom:30,
     },
     inputIcon:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         padding:10,
         borderTopLeftRadius:5,
         borderBottomLeftRadius:5,
@@ -120,7 +122,8 @@ const styles = StyleSheet.create({
         marginTop:30
     },
     button:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         padding:8,
         borderRadius:10,
         paddingLeft:15,

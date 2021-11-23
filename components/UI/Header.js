@@ -13,7 +13,8 @@ export default function Header(props) {
 const styles = StyleSheet.create({
     header:{
         padding:10,
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         width:'100%',
         flexDirection:'column',
         alignItems:'center',

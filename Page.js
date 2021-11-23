@@ -10,6 +10,8 @@ import { locationSliceAction } from './store/locationSlice';
 
 const LOCATION_TASK_NAME = "background-location-task";
 
+let l1 = 0
+let l2 = 0
 export default function Page() {
     const dispatch = useDispatch()
     const requestPermission = async () => {
@@ -19,6 +21,8 @@ export default function Page() {
           return;
         }
         const location = await Location.getCurrentPositionAsync()
+        l1 = location.coords.latitude
+        l2 = location.coords.longitude
         dispatch(locationSliceAction.update({
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
@@ -55,8 +59,8 @@ export default function Page() {
       }
     return (
         <View style={styles.container}>
-            <Text onPress={af}>a</Text>
-            <Text onPress={stopaf}>b</Text>
+            {/* <Text onPress={af}>a</Text>
+            <Text onPress={stopaf}>b</Text> */}
             {!gotID&&<LoginPage/>}
             {gotID&&<AllPage></AllPage>}
         </View>
@@ -71,7 +75,6 @@ const styles = StyleSheet.create({
 })
 
 TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
-  
     if (error) {
       alert(error)
       // Error occurred - check `error.message` for more details.
@@ -80,7 +83,11 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
     
     if (data) {
       const { locations } = data; 
-      console.log(locations[0].coords.latitude) 
-      console.log(locations[0].coords.longitude)
+      // console.log(locations[0].coords.latitude - l1) 
+      l1 = locations[0].coords.latitude
+      // console.log(locations[0].coords.longitude - l2)
+      l2 = locations[0].coords.longitude
+      console.log(l1)
+      console.log(l2)
     }
   });

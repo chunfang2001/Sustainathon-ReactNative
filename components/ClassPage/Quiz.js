@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 import Question from './Question'
 
+const second = 5*60000
 export default function Quiz() {
     const [questionList,setQuestionList] = useState([])
     const id = useSelector(state => state.session.id)
@@ -17,8 +18,10 @@ export default function Quiz() {
                 },
         });
         const result = await fetcher.json();
+        result.question = result.question.filter((r)=>{
+            return  Date.parse(r.createdAt)+second >= Date.now()
+        })
         setQuestionList(result.question)
-        console.log(result)
     }
     useEffect(()=>{
         fetchQues()
@@ -28,9 +31,13 @@ export default function Quiz() {
             <View style={styles.header}>
                 <Text style={styles.title}>Quiz</Text>
             </View>
+            <TouchableOpacity style={{backgroundColor:'white',opacity:0.5,width:'100%',flexDirection:'column',alignItems:'center',padding:3}} onPress={fetchQues}>
+                <View>
+                    <Text>Refresh</Text>
+                </View>
+            </TouchableOpacity>
             <ScrollView style={styles.quizContainer}>
-                
-                {questionList.map((ques)=><Question question={ques.question} key={ques.id}></Question>)}
+                {questionList.map((ques)=><Question question={ques.question} key={ques.id} id={ques.id}></Question>)}
             </ScrollView>
         </View>
     )
@@ -41,7 +48,8 @@ const styles = StyleSheet.create({
         flex:1,
     },
     header:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         width:'100%',
         alignItems:'center',
         flexDirection:'column',

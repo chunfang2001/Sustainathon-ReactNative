@@ -33,7 +33,7 @@ export default function SessionInput(props) {
                 <TextInput style={{borderWidth:1,borderColor:'#aaaaaa',flex:5, overflow:'hidden',padding:5}} placeholder="Session ID" onChangeText={(input)=>{
                     setSessionId(input)
                 }} value={sessionID}></TextInput>
-                <TouchableOpacity style={{backgroundColor:'blue',padding:5,marginLeft:10,borderRadius:3,flex:2,alignItems:'center'}} onPress={joinSessionHandler}>
+                <TouchableOpacity style={{backgroundColor:"black",padding:5,marginLeft:10,borderRadius:3,flex:2,alignItems:'center'}} onPress={joinSessionHandler}>
                     <Text style={{color:'white',fontSize:18}}>Join</Text>
                 </TouchableOpacity>
             </View>

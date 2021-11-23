@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         marginBottom:10,
         padding:20,
         flexDirection:'column',
-        alignItems:'center'
+        alignItems:'center',
+        elevation:5
     },
     title:{
         fontSize:20,

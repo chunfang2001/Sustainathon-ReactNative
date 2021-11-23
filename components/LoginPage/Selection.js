@@ -28,7 +28,8 @@ export default function Selection({ navigation }) {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#dacfe5',
+        // backgroundColor:'#dacfe5',
+        backgroundColor:'rgb(243, 244, 246)',
         flexDirection:'column',
         alignItems:'center'
     },
@@ -64,7 +65,8 @@ const styles = StyleSheet.create({
         elevation:10,
     },
     signupButton:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         width:330,
         flexDirection:'column',
         alignItems:'center',

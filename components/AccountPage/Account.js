@@ -1,10 +1,13 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Divider } from 'react-native-elements/dist/divider/Divider'
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { authSliceAction } from '../../store/authSlice'
 
 export default function Account() {
+    const email = useSelector(state=>state.auth.email)
+    const name = useSelector(state=>state.auth.name)
     const dispatch = useDispatch()
 
     const logoutHandler = ()=>{
@@ -15,8 +18,8 @@ export default function Account() {
         <View style={styles.container}>
             <View style={styles.profile}>
                 <View style={{flex:1}}></View>
-                <Text style={styles.name}>TAN CHUN FANG</Text>
-                <Text style={styles.email}>chunfang2001@gmail.com</Text>
+                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.email}>{email}</Text>
             </View>
             <Divider width={5}></Divider>
             <View style={{flex:1}}></View>
@@ -32,10 +35,12 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems:'center',
         flexDirection:'column',
-        backgroundColor:'#dacfe5'
+        // backgroundColor:'#dacfe5'
+        backgroundColor:'rgb(243, 244, 246)'
     },
     profile:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         height:'25%',
         width:'100%',
         elevation:20

@@ -16,16 +16,16 @@ export default function SessionPage() {
         <>
             <Tab.Navigator
             initialRouteName="SessionPage"
-            inactiveColor="white"
-            activeColor= '#edc7f1'
-            barStyle={{ backgroundColor: '#694fad' }}>
+            inactiveColor="black"
+            activeColor= 'rgb(37, 99, 150)'
+            barStyle={{ backgroundColor: 'rgb(209, 213, 219)' }}>
                 <Tab.Screen 
                     name="Session" 
                     component={Session} 
                     options={{
                         tabBarLabel: 'Session',
                         tabBarIcon : ()=>{
-                            return <Entypo name="time-slot" size={20} color="white"/>
+                            return <Entypo name="time-slot" size={20} color="black"/>
                         },
                         
                     }}
@@ -37,7 +37,7 @@ export default function SessionPage() {
                         tabBarLabel: 'Map',
                         tabBarIcon : ()=>{
                             return <View >
-                                <Feather name="map-pin" size={20} color="white" />
+                                <Feather name="map-pin" size={20} color="black" />
                             </View>         
                         }
                     }}
@@ -49,7 +49,7 @@ export default function SessionPage() {
                         tabBarLabel: 'Account',
                         tabBarIcon : ()=>{
                             return <View >
-                                <MaterialIcons name="account-circle" size={20} color="white" />
+                                <MaterialIcons name="account-circle" size={20} color="black" />
                             </View>         
                         }
                     }}

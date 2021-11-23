@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems:'center',
         flexDirection:'column',
-        backgroundColor:'#dacfe5'
+        // backgroundColor:'#dacfe5'
+        backgroundColor:'rgb(243, 244, 246)',
     },
     scroll:{
         padding:10,

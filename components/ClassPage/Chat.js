@@ -1,4 +1,4 @@
-import React, { useRef,useState } from 'react'
+import React, { useEffect, useRef,useState } from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons'; 
@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 export default function Chat() {
     const sessionID = useSelector(state => state.session.id)
     const [text,setText] = useState("")
-    let {data} = useSWR(`https://sustainathon.vercel.app/api/db/message/get/?session_id=${sessionID}`, (...args) => fetch(...args).then(res => res.json()))
+    const [data,setData] = useState([])
 
     const createMessageHandler = async()=>{
         const fetcher = await fetch("https://sustainathon.vercel.app/api/db/message/create", {
@@ -25,9 +25,27 @@ export default function Chat() {
                 },
         });
         const result = await fetcher.json();
+        sendRequest()
         setText("")
     }
     const scrollViewRef = useRef();
+
+    const sendRequest = async()=>{
+        const response = await fetch(`https://sustainathon.vercel.app/api/db/message/get/?session_id=${sessionID}`)
+        const dt = await response.json()
+        setData(dt.chat)
+    }
+
+    let timer 
+    useEffect(()=>{
+        sendRequest()
+        timer = setInterval(() => {
+            sendRequest()
+        }, 10000);
+        return ()=>{
+            clearInterval(timer)
+        }
+    },[])
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -37,7 +55,7 @@ export default function Chat() {
             <ScrollView style={styles.quizContainer} 
                 ref={scrollViewRef}
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>
-                {data?.chat.map((msg)=>{
+                {data?.map((msg)=>{
                     return (
                     <View style={styles.chatBox} key={msg.id}>
                         <View style={styles.messageBox}>
@@ -55,7 +73,7 @@ export default function Chat() {
                     }}></TextInput>
                 </View>
                 <TouchableOpacity onPress={createMessageHandler}>
-                    <Ionicons name="send" size={24} color="purple" style={styles.sendButton}/>
+                    <Ionicons name="send" size={24} color="black" style={styles.sendButton}/>
                 </TouchableOpacity>    
             </View>
         </View>
@@ -69,7 +87,8 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     header:{
-        backgroundColor:'purple',
+        // backgroundColor:'purple',
+        backgroundColor:'black',
         width:'100%',
         alignItems:'center',
         flexDirection:'column',
