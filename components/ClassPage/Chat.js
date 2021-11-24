@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons'; 
 import { Divider } from 'react-native-elements/dist/divider/Divider';
-import useSWR from 'swr';
 import { useSelector } from 'react-redux';
 
 

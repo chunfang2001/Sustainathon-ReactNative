@@ -36,6 +36,9 @@ export default function Quiz() {
                     <Text>Refresh</Text>
                 </View>
             </TouchableOpacity>
+            {questionList.length===0&&<View style={{width:'100%',flexDirection:'column',alignItems:'center',padding:8,marginTop:10}}>
+                <Text style={{fontSize:18}}>Not quizzes yet</Text>
+            </View>}
             <ScrollView style={styles.quizContainer}>
                 {questionList.map((ques)=><Question question={ques.question} key={ques.id} id={ques.id}></Question>)}
             </ScrollView>

@@ -18,6 +18,9 @@ export default function Login({navigation}) {
         }else if (password===""){
             alert("Please fill in the blank")
             return
+        }else if(!email.includes("@")){
+            alert("Invalid email")
+            return 
         }
         dispatch(loginAction(email,"",password))
     }
