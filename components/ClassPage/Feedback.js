@@ -17,19 +17,18 @@ export default function Feedback() {
     }
     const feedbackHandler = async()=>{
         setFeedback('')
-        // const response = await fetch("https://sustainathon.vercel.app/api/feedback/create",{
-        //     method:"POST",
-        //     body:JSON.stringify({
-        //         "session_id": sessionID,
-        //         "rating": rating,
-        //         "text": feedback
-        //     }),
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        // })
-        // const data = await response.json()
-        // console.log(data)
+        const response = await fetch("https://sustainathon.vercel.app/api/db/feedback/create",{
+            method:"POST",
+            body:JSON.stringify({
+                "session_id": sessionID,
+                "rating": rating,
+                "text": feedback
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        const data = await response.json()
         setSubmitted(true)
     }
     return (

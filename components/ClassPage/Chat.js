@@ -12,6 +12,10 @@ export default function Chat() {
     const [data,setData] = useState([])
 
     const createMessageHandler = async()=>{
+        if(text===""){
+            alert("Please enter something")
+            return
+        }
         const fetcher = await fetch("https://sustainathon.vercel.app/api/db/message/create", {
                 method: "POST",
                 body: JSON.stringify({ 
