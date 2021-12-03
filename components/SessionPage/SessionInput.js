@@ -27,7 +27,7 @@ export default function SessionInput(props) {
         }
     }
     return (
-        <View style={{backgroundColor:'white', width:'95%',borderRadius:10,padding:8,flexDirection:'column',alignItems:'center',elevation:10}}>
+        <View style={{backgroundColor:'white', width:'95%',borderRadius:10,padding:8,flexDirection:'column',alignItems:'center',elevation:10, marginTop:10}}>
             <Text style={{fontSize:17}}>Join Session Using code</Text>
             <View style={{flexDirection:'row',alignItems:'center', width:'100%',marginTop:5}}>
                 <TextInput style={{borderWidth:1,borderColor:'#aaaaaa',flex:5, overflow:'hidden',padding:5}} placeholder="Session ID" onChangeText={(input)=>{

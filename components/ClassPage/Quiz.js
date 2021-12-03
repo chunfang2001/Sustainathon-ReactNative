@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native'
 import { useSelector } from 'react-redux'
 import Question from './Question'
 
+let timer
 const second = 5*60000
 export default function Quiz() {
     const [questionList,setQuestionList] = useState([])
     const id = useSelector(state => state.session.id)
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        clearTimeout(timer)
+        setRefreshing(true);
+        fetchQues();
+        setTimeout(()=>{
+            setRefreshing(false)
+        },2000)
+
+      }, []);
     const fetchQues = async()=>{
         const fetcher = await fetch("https://sustainathon.vercel.app/api/db/question/get", {
                 method: "POST",
@@ -31,15 +43,16 @@ export default function Quiz() {
             <View style={styles.header}>
                 <Text style={styles.title}>Quiz</Text>
             </View>
-            <TouchableOpacity style={{backgroundColor:'white',opacity:0.5,width:'100%',flexDirection:'column',alignItems:'center',padding:3}} onPress={fetchQues}>
-                <View>
-                    <Text>Refresh</Text>
-                </View>
-            </TouchableOpacity>
             {questionList.length===0&&<View style={{width:'100%',flexDirection:'column',alignItems:'center',padding:8,marginTop:10}}>
                 <Text style={{fontSize:18}}>Not quizzes yet</Text>
             </View>}
-            <ScrollView style={styles.quizContainer}>
+            <ScrollView style={styles.quizContainer}
+                refreshControl={
+                    <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    />
+                }>
                 {questionList.map((ques)=><Question question={ques.question} key={ques.id} id={ques.id}></Question>)}
             </ScrollView>
         </View>

@@ -5,6 +5,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { useSelector } from 'react-redux';
 
+var Filter = require('bad-words')
+const filter = new Filter();
+var newBadWords = ['lanjiao', 'Lanjiao', 'jibai','Jibai',"Cibai","cibai"];
+filter.addWords(...newBadWords);
 
 export default function Chat() {
     const sessionID = useSelector(state => state.session.id)
@@ -16,11 +20,12 @@ export default function Chat() {
             alert("Please enter something")
             return
         }
+        const filterText = filter.clean(text)
         const fetcher = await fetch("https://sustainathon.vercel.app/api/db/message/create", {
                 method: "POST",
                 body: JSON.stringify({ 
                 sender: "Anonymous", // put anonymous or student email
-                text: text, // the message
+                text: filterText, // the message
                 session_id: sessionID // need a created session_id
             }),
                 headers: {

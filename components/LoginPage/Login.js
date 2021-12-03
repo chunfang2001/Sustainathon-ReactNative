@@ -22,7 +22,7 @@ export default function Login({navigation}) {
             alert("Invalid email")
             return 
         }
-        dispatch(loginAction(email,"",password))
+        dispatch(loginAction(email.trim(),"",password))
     }
     
 

@@ -12,7 +12,7 @@ const locationSlice = createSlice({
         update(state,action){
             state.latitude = action.payload.latitude
             state.longitude = action.payload.longitude
-        }
+        },
     }
 })
 

@@ -24,7 +24,7 @@ export default function Register({navigation}) {
             return 
         }
         
-        dispatch(loginAction(email,name,password))
+        dispatch(loginAction(email.trim(),name,password))
     }
     return (
         <View style={styles.container}>
