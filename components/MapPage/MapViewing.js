@@ -14,8 +14,8 @@ export default function MapViewing() {
             <MapView
             style={styles.mapStyle}
             initialRegion={{
-            latitude: 0,
-            longitude: 0,
+            latitude: loc.latitude,
+            longitude: loc.longitude,
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
             }}
