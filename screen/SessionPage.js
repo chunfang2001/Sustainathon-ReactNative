@@ -5,8 +5,8 @@ import { Entypo } from '@expo/vector-icons';
 import Account from '../components/AccountPage/Account';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { View } from 'react-native';
-import { Feather } from '@expo/vector-icons'; 
-import MapViewing from '../components/MapPage/MapViewing';
+// import { Feather } from '@expo/vector-icons'; 
+// import MapViewing from '../components/MapPage/MapViewing';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -30,7 +30,7 @@ export default function SessionPage() {
                         
                     }}
                 />
-                <Tab.Screen 
+                {/* <Tab.Screen 
                     name="Map" 
                     component={MapViewing} 
                     options={{
@@ -41,7 +41,7 @@ export default function SessionPage() {
                             </View>         
                         }
                     }}
-                />
+                /> */}
                 <Tab.Screen 
                     name="Account" 
                     component={Account} 
