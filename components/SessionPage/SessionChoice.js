@@ -1,19 +1,58 @@
 import React from 'react'
-import { Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity,Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { sessionSliceAction } from '../../store/sessionSlice'
+import { useSelector } from 'react-redux'
 
 export default function SessionChoice(props) {
+    const session_id = useSelector(state => state.session.id)
+    const takingAtt = useSelector(state=> state.session.takingAtt)
     const dispatch = useDispatch()
     const changeSessionHandler=(id)=>{
-        dispatch(sessionSliceAction.changeSession({
-            id:id
-        }))
+        if(session_id !== props.id){
+            if(takingAtt){
+                Alert.alert(
+                    "Attendance Warning",
+                    "Are you sure you want to leave the attendance session? You will lose your attendance if you click 'OK' button",
+                    [
+                      {
+                        text: "Cancel",
+                        onPress: () => {
+                            return
+                        },
+                        style: "cancel"
+                      },
+                      { text: "OK", onPress: () => {
+                        dispatch(sessionSliceAction.changeSession({
+                            id:id,
+                            startedAt:props.startedAt
+                        }))
+                        props.nav.navigate('Class',{
+                            change: true,
+                        })
+                      } }
+                    ]
+                  );
+            }else{
+                dispatch(sessionSliceAction.changeSession({
+                    id:id,
+                    startedAt:props.startedAt
+                }))
+                props.nav.navigate('Class',{
+                    change: true,
+                })
+            }
+            
+        }else{
+            props.nav.navigate('Class',{
+                change: false,
+            })
+        }
     }
     return (
         <TouchableOpacity style={styles.container} onPress={()=>{
             changeSessionHandler(props.id)
-            props.nav.navigate('Class')
+            
         }}>
             <Text style={styles.title}>{props.title}</Text>
         </TouchableOpacity>

@@ -95,7 +95,7 @@ export default function Session({ navigation: nav}) {
                     onRefresh={onRefresh}
                     />
                 }>
-                {sessionList.map((obj)=><SessionChoice key={obj.id} title={obj.class_code} nav={nav} id={obj.id}/>)}
+                {sessionList.map((obj)=><SessionChoice key={obj.id} title={obj.class_code} nav={nav} id={obj.id} startedAt={Date.parse(obj.startedAt)}/>)}
             </ScrollView>
             <Divider orientation="horizontal" width={3}/>
         </View>

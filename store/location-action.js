@@ -2,7 +2,6 @@ import { locationSliceAction } from "./locationSlice"
 
 export const updateLocation = (session_id,email,latitude,longitude)=>{
     return async(dispatch)=>{
-        console.log("updateLocation")
         const response = await fetch("https://sustainathon.vercel.app/api/db/location/create",{
             method:"POST",
             body:JSON.stringify({
