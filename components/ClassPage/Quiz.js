@@ -30,9 +30,9 @@ export default function Quiz() {
                 },
         });
         const result = await fetcher.json();
-        result.question = result.question.filter((r)=>{
-            return  Date.parse(r.createdAt)+second >= Date.now()
-        })
+        // result.question = result.question.filter((r)=>{
+        //     return  Date.parse(r.createdAt)+second >= Date.now()
+        // })
         setQuestionList(result.question)
     }
     useEffect(()=>{
@@ -53,7 +53,7 @@ export default function Quiz() {
                     onRefresh={onRefresh}
                     />
                 }>
-                {questionList.map((ques)=><Question question={ques.question} key={ques.id} id={ques.id}></Question>)}
+                {questionList.map((ques)=><Question question={ques.question} key={ques.id} id={ques.id} url={ques.url}></Question>)}
             </ScrollView>
         </View>
     )

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity,Image, Modal, BackHandler } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 export default function Question(props) {
     const email = useSelector(state => state.auth.email)
     const sessionID = useSelector(state=>state.session.id)
     const [answer,setAnswer] = useState("")
     const [gotAnswer, setGotAnswer] = useState(false)
+    const [showModal,setShowModal] = useState(false)
 
     const submitAnswerHandler = async()=>{
         const fetcher = await fetch("https://sustainathon.vercel.app/api/db/student/answer", {
@@ -47,11 +49,36 @@ export default function Question(props) {
               }
         }
         checkGotAnswer()
-
     }, [])
     return (
         <View style={styles.container}>
             <View style={styles.position}>
+                <Modal visible={showModal} transparent={true}
+                onRequestClose={() => {setShowModal(false)}}>
+                    <ImageViewer 
+                        enableSwipeDown={true}
+                        onCancel={()=>{
+                            setShowModal(false)
+                        }}
+                        imageUrls={[{
+                            url:"https://firebasestorage.googleapis.com/v0/b/sustainathon-350dd.appspot.com/o/ER%20diagram%20-%20Page%201.png?alt=media&token=4566f644-f051-4a24-bdd2-ce7e1b6b88c2"
+                        }]}/>
+                </Modal>
+                {props.url!==null&&<View style={{width:'100%',height:300,marginBottom:20}} >
+                    <TouchableOpacity onPress={()=>{
+                            setShowModal(true)
+                        }}>        
+                        <Image    
+                            style={{
+                                width: '100%',
+                                height:'100%',
+                                resizeMode: 'contain'}}
+                            source={{
+                                uri:"https://firebasestorage.googleapis.com/v0/b/sustainathon-350dd.appspot.com/o/ER%20diagram%20-%20Page%201.png?alt=media&token=4566f644-f051-4a24-bdd2-ce7e1b6b88c2"
+                            }}/>
+                    </TouchableOpacity>
+                </View>}
+                
                 <Text style={styles.question}>{props.question}</Text>
                 {!gotAnswer&&<TextInput style={styles.answer} placeholder="answer" onChangeText={(input)=>{
                     setAnswer(input)
@@ -71,7 +98,7 @@ const styles = StyleSheet.create({
         width:'100%',
         flexDirection:'column',
         alignItems:'center',
-        marginTop:10
+        marginTop:10,
     },
     position:{
         backgroundColor:'white',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, ScrollView, RefreshControl } from 'react-native'
+import { View, StyleSheet, ScrollView, RefreshControl} from 'react-native'
 import SessionChoice from './SessionChoice'
 import { Divider } from 'react-native-elements';
 import Header from '../UI/Header';

@@ -25,7 +25,7 @@ export default function ClassPage({route}) {
     const locationTrackingSetter = async()=>{
         await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
           accuracy: Location.Accuracy.Highest,
-          timeInterval: 10*1000,
+          timeInterval: 60*1000,
           distanceInterval: 0,
           foregroundService:{
             notificationTitle:'Attendance App',
@@ -167,6 +167,6 @@ const sessionEndHandler = async(session_id,email)=>{
     sessionlist = sessionlist.filter((r)=>{
         return  r.id===session_id
     })
-    let end = sessionlist[0].end || false
+    let end = sessionlist[0]?.end || false
     return end
 }
