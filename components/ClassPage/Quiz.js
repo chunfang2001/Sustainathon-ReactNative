@@ -30,9 +30,9 @@ export default function Quiz() {
                 },
         });
         const result = await fetcher.json();
-        // result.question = result.question.filter((r)=>{
-        //     return  Date.parse(r.createdAt)+second >= Date.now()
-        // })
+        result.question = result.question.filter((r)=>{
+            return  Date.parse(r.createdAt)+second >= Date.now()
+        })
         setQuestionList(result.question)
     }
     useEffect(()=>{

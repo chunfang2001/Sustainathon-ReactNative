@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet,TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet,TouchableOpacity,Image } from 'react-native'
+import icon from "../../assets/icon.png"
 
 export default function Selection({ navigation }) {
     const goLogin = ()=>{
@@ -11,9 +12,14 @@ export default function Selection({ navigation }) {
     return (
         <View style={styles.container}>
             <Text style={styles.welcome}>Welcome</Text>
-            <Text style={styles.description}>The attendance app that monitor your attendance</Text>
+            <Text style={styles.description}>The attendance app that monitors your attendance</Text>
             <View style={styles.logo}>
-                <Text style={styles.logoTitle}>AttendanceAPP</Text>
+                <Image    
+                    style={{
+                        width: '100%',
+                        height:'80%',
+                        resizeMode: 'contain'}}
+                    source={icon}/>
             </View>
             <TouchableOpacity style={styles.loginButton} onPress={goLogin}>
                 <Text style={{fontSize:18}}>Login</Text>
